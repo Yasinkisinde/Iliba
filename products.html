@@ -1,0 +1,2034 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  
+        
+           
+        <img src="mana.jpg" height="60" width="30"</title>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #141414;
+            color: white;
+            
+            margin-bottom: 100px; /* Ensure space for the bottom navbar */
+            background-image: url('bada.png'); /
+           
+             background image: url(c.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: repeat;
+            animation: moveBackground 8s linear infinite;
+        }
+
+        /* Keyframes for background movement */
+        @keyframes moveBackground {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 5 5; /* Adjust this value for speed and direction */
+            }
+        }
+
+        /* Upper bar (navbar) with transition of 4 pictures */
+        .navbar {
+            height: 100px;
+            width:50 px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding:  15px;
+            animation: bannerTransition 6s infinite; /* 16s to go through 4 images, each for 4 seconds */
+        }
+
+        /* Keyframes for banner background transition */
+      
+
+        .navbar h1 {
+            font-size: 24px;
+            z-index: 1;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            padding: 10px;
+            width: 225px;
+            border: none;
+            border-radius: 20px;
+        }
+  .filter-bar {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(51, 51, 51, 0.8); /* Added transparency */
+            padding: 10px;
+            margin:15px 4px;
+            
+            z-index: 4;
+      
+        }
+
+        .filter-button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 20px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .filter-button:hover {
+            background-color: #555;
+        }
+
+        .container {
+            padding: 20px;
+            position: center;
+            z-index: 5px;
+            display: flex;
+            flex-direction: column; /* Stack tutorial cards vertically */
+        }
+
+        .tutorial-card {
+            background-color: rgba(34, 34, 34, 0.9); /* Added transparency */
+            border-radius: 25px;
+            padding: 20px;
+            margin-bottom: 20px;
+            order: 2; /* Default order to 2, meaning non-matches will appear lower */
+            transition: order 100s ease; /* Smooth transition when order changes */
+        }
+
+        .tutorial-card img {
+            
+            width: 100%;
+            height:50%;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+      
+        
+        .tutorial-info {
+            margin-top: -2px;
+        }
+
+        .tutorial-info h2 {
+            font-size: 20px;
+        }
+
+        .tutorial-info p {
+            margin-top: 2px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .actions .like-save {
+            display: flex;
+        }
+
+        .like-save button {
+            background: none;
+            border: none;
+            color: white;
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .like-save button:hover {
+            color: #bbb;
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(34, 34, 34, 0.8); /* Added transparency */
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 0px;
+        }
+
+        .bottom-nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .bottom-nav button:hover {
+            color: #bbb;
+        }
+    
+    
+        
+         * {
+            box-sizing: border-box;
+        }
+.slider {
+            width: 255%;
+            max-width: 350px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 35px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 30%;
+        }
+
+        .slides img {
+            width: -30px;
+            height: 200px;
+            
+            border-radius: 15px;
+        }
+
+        .navigation {
+            position: absolute;
+            top: 35%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(8%);
+        }
+
+        .prev, .next {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 30%;
+            user-select: none;
+            font-size: 30px;
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 5px;
+            width: 7%;
+            text-align: center;
+        }
+
+        .dot {
+            display: inline-block;
+            height: 0px;
+            width: 0px;
+            margin: 0px 0px;
+            background-color: #bbb;
+            border-radius: 0%;
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+
+        .dot.active {
+            background-color: #717171;
+        }</style>
+      <style>
+         .like-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #4267B2; /* Facebook blue */
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: Arial, sans-serif;
+        }
+
+        .like-button:hover {
+            background-color: #365899; /* Darker blue on hover */
+        }
+
+        .like-button .thumb-icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .like-button .like-text {
+            font-weight: bold;
+        }
+      </style>
+        
+        
+    </style>
+</head>
+<body>
+     <style>
+       
+
+    </style>
+    
+
+    <header class="navbar">
+        <h1><img src="a.jpg" height="60" width="50"></h1>
+           <div class="search-box" search-box>
+       
+          <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Mugo Watch..." id="searchBar">
+        </div>
+       
+      </button>
+    </div>
+
+        
+        
+    </header>
+    
+    
+    
+    
+    
+    <marque>
+    <div class="filter-bar">
+        <button class="filter-button"><marque></marque>NEW MOVIES</button>
+        <button class="filter-button">EXPLOIT</button>
+        <button class="filter-button">PENETRATION</button>
+        
+    </div>
+</marque>
+    
+<div class="slider">
+    <div class="slides">
+        <!-- Add your images here -->
+        <img src="b.jpg" alt="Movie 1">
+        <img src="c.jpg" alt="Movie 2">
+        <img src="d.png" alt="Movie 3">
+        <img src="e.png" alt="Movie 4">
+    </div>
+
+    <div class="navigation">
+        <span class="prev" onclick="moveSlides(-1)">&#10094;</span>
+        <span class="next" onclick="moveSlides(1)">&#10095;</span>
+    </div>
+
+    <div class="dots">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+    </div>
+</div>
+
+         
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelector('.slides');
+    const dots = document.querySelectorAll('.dot');
+    const totalSlides = dots.length;
+
+    function showSlides() {
+        slideIndex++;
+        if (slideIndex >= totalSlides) {
+            slideIndex = 0;
+        }
+        slides.style.transform = `translateX(${-slideIndex * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[slideIndex].classList.add('active');
+    }
+
+    function moveSlides(n) {
+        slideIndex += n;
+        if (slideIndex >= totalSlides) {
+            slideIndex = 0;
+        }
+        if (slideIndex < 0) {
+            slideIndex = totalSlides - 1;
+        }
+        slides.style.transform = `translateX(${-slideIndex * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[slideIndex].classList.add('active');
+    }
+
+    function currentSlide(n) {
+        slideIndex = n - 1;
+        slides.style.transform = `translateX(${-slideIndex * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[slideIndex].classList.add('active');
+    }
+
+    // Auto slide every 3 seconds
+    setInterval(showSlides, 3000);</script>
+</script>
+
+        
+
+</body>
+
+
+
+
+    
+    <body>
+    
+       <link
+        rel="stylesheet"
+        href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .swiper-container {
+            width: 100%;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        .card img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .card-content h3 {
+            margin: 10px 0;
+        }
+        .card-content p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Swiper container -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250x150?text=TomDee+Ug" alt="TomDee Ug">
+                    <div class="card-content">
+                        <h3>TomDee Ug</h3>
+                        <p>Description or details for TomDee Ug.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250x150?text=Jordan+Shelz" alt="Jordan Shelz">
+                    <div class="card-content">
+                        <h3>Jordan Shelz</h3>
+                        <p>Description or details for Jordan Shelz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250x150?text=Crush+Kdr" alt="Crush Kdr">
+                    <div class="card-content">
+                        <h3>Crush Kdr</h3>
+                        <p>Description or details for Crush Kdr.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 2,
+            spaceBetween: 2,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            // Enable touch gestures
+            grabCursor: true,
+        });
+    
+            
+
+   
+</script>
+</div>
+
+    
+    
+    
+    <div>
+        
+        
+          <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .post-container {
+            background-color: rgba(34, 34, 34, 0.9); /
+            width: 350px;
+            margin: 20px auto;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            padding-bottom: 10px;
+        }
+        .post-container img {
+            width: 100%;
+            height:4%;
+            border-radius: 15px;
+            cursor: pointer;
+            position: cover;
+        }
+        .post-details {
+            padding: 10px;
+        }
+        .post-details p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+        }
+        .post-actions button {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #007BFF;
+            display: flex;
+            align-items: center;
+        }
+        .post-actions button:focus {
+            outline: none;
+        }
+        .post-actions button .icon {
+            font-size: 18px;
+            margin-right: 5px;
+        }
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+        .post-footer span {
+            font-size: 12px;
+            color: #777;
+        }
+
+        /* Updated styling for the button to be fixed at the bottom right */
+        .add-post-btn {
+            padding: 15px 25px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+        #fileInput {
+            display: none;
+        }
+
+        /* Modal styling for input form */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        .modal input {
+            width: 100%;
+            margin-bottom: px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .modal button {
+            padding: 1px 15px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+
+
+    <!-- + Add Post Button fixed at the bottom right -->
+    <button class="add-post-btn" onclick="document.getElementById('fileInput').click()">+</button>
+
+    <!-- Hidden file input for choosing images -->
+    <input type="file" id="fileInput" accept="image/*" onchange="openModal(event)">
+
+    <!-- Section where posts will be added -->
+    <div id="postSection"></div>
+
+    <!-- Modal for entering post details -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <h3>Enter Post Details</h3>
+            <input type="text" id="postTitle" placeholder="Enter Post Title">
+            <input type="text" id="postDescription" placeholder="Enter Post Description">
+            <button onclick="addNewPost()">Add Post</button>
+        </div>
+    </div>
+
+    <script>
+        let postIndex = 0;
+        let imageUrl = '';
+
+        // Function to open the modal when an image is selected
+        function openModal(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageUrl = e.target.result;
+                    document.getElementById('postModal').style.display = 'flex'; // Show the modal
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Function to add a new post with the chosen image and user input
+        function addNewPost() {
+            const title = document.getElementById('postTitle').value;
+            const description = document.getElementById('postDescription').value;
+
+            // Create a new post container
+            const postContainer = document.createElement('div');
+            postContainer.classList.add('post-container');
+
+            // Create the image element with the selected image
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = 'User Post Image';
+            img.onclick = function() { increaseViews(postIndex); };
+
+            // Create post details section with title and description
+            const postDetails = document.createElement('div');
+            postDetails.classList.add('post-details');
+            postDetails.innerHTML = `
+                <h4>${title}</h4>
+                <p>${description}</p>
+                <p id="viewCount${postIndex}">Views: 0</p>
+                <p id="likeCount${postIndex}">Likes: 0</p>
+            `;
+
+            // Create action buttons (like and save)
+            const postActions = document.createElement('div');
+            postActions.classList.add('post-actions');
+            postActions.innerHTML = `
+                <button onclick="increaseLikes(${postIndex})">
+                    <span class="icon"> <i class="fas fa-thumbs-up thumb-icon"></i>      </span> Like
+                </button>
+                <button><span class="icon">💾</span> Save</button>
+            `;
+
+            // Create footer with product details
+            const postFooter = document.createElement('div');
+            postFooter.classList.add('post-footer');
+            postFooter.innerHTML = `
+                <span> ILIBA is created by ugandan  kisinde yasin</span>
+                <span>2 Save</span>
+            `;
+
+            // Append image, details, actions, and footer to the post container
+            postContainer.appendChild(img);
+            postContainer.appendChild(postDetails);
+            postContainer.appendChild(postActions);
+            postContainer.appendChild(postFooter);
+
+            // Add the new post at the top of the section
+            const postSection = document.getElementById('postSection');
+            postSection.insertBefore(postContainer, postSection.firstChild);
+
+            // Initialize likes and views for the new post
+            localStorage.setItem(`likes${postIndex}`, 0);
+            localStorage.setItem(`views${postIndex}`, 0);
+
+            postIndex++;
+
+            // Reset the modal and close it
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postDescription').value = '';
+            document.getElementById('postModal').style.display = 'none';
+        }
+
+        // Function to increase likes for a specific post
+        function increaseLikes(index) {
+            let likes = localStorage.getItem(`likes${index}`) ? parseInt(localStorage.getItem(`likes${index}`)) : 0;
+            likes++;
+            document.getElementById(`likeCount${index}`).innerText = `Likes: ${likes}`;
+            localStorage.setItem(`likes${index}`, likes);
+        }
+
+        // Function to increase views for a specific post
+        function increaseViews(index) {
+            let views = localStorage.getItem(`views${index}`) ? parseInt(localStorage.getItem(`views${index}`)) : 0;
+            views++;
+            document.getElementById(`viewCount${index}`).innerText = `Views: ${views}`;
+            localStorage.setItem(`views${index}`, views);
+        }
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     <div class="tutorial-card">
+            <img src="c.jpg"  " alt="mana.jpg" class="image" id="image1">
+            <div class="tutorial-info">
+                <h2>Mana - Installation</h2>
+                <p id="views1">0 views</p>
+                <div class="actions">
+                    <span id="likes1">0 likes</span>
+                    <div class="like-save">
+                        <button  class="like-button"   onclick="incrementLikes('likes1', 'likesCount1')"> <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span>
+    </button>                   
+                            
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
+       
+    </style>    
+                            
+                        <button>2 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  
+  
+  
+
+  <script>
+   // Load saved likes and views from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load initial likes and views
+            loadCounts('likes1', 'likesCount1', 'views1', 'viewsCount1');
+            loadCounts('likes2', 'likesCount2', 'views2', 'viewsCount2');
+
+            // Add event listeners for images to track views
+            document.getElementById('image1').addEventListener('click', function () {
+                incrementViews('views1', 'viewsCount1');
+            });
+
+            document.getElementById('image2').addEventListener('click', function () {
+                incrementViews('views2', 'viewsCount2');
+            });
+        });
+
+        // Function to increment likes
+        function incrementLikes(likeId, storageKey) {
+            let likesElement = document.getElementById(likeId);
+            let currentLikes = parseInt(localStorage.getItem(storageKey) || 0);
+            currentLikes++;
+            likesElement.innerText = currentLikes + " likes";
+            localStorage.setItem(storageKey, currentLikes);  // Save to localStorage
+        }
+
+        // Function to increment views
+        function incrementViews(viewId, storageKey) {
+            let viewsElement = document.getElementById(viewId);
+            let currentViews = parseInt(localStorage.getItem(storageKey) || 0);
+            currentViews++;
+            viewsElement.innerText = currentViews + " views";
+            localStorage.setItem(storageKey, currentViews);  // Save to localStorage
+        }
+
+        // Function to load saved counts from localStorage
+        function loadCounts(likeId, likeStorageKey, viewId, viewStorageKey) {
+            let likesElement = document.getElementById(likeId);
+            let viewsElement = document.getElementById(viewId);
+
+            let savedLikes = localStorage.getItem(likeStorageKey) || 0;
+            let savedViews = localStorage.getItem(viewStorageKey) || 0;
+
+            likesElement.innerText = savedLikes + " likes";
+            viewsElement.innerText = savedViews + " views";
+        }</script>
+
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     <div class="tutorial-card">
+            <img src="c.jpg"  " alt="mana.jpg" class="image" id="image1">
+            <div class="tutorial-info">
+                <h2>Mana - Installation</h2>
+                <p id="views1">0 views</p>
+                <div class="actions">
+                    <span id="likes1">0 likes</span>
+                    <div class="like-save">
+                        <button  class="like-button"   onclick="incrementLikes('likes1', 'likesCount1')"> <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span>
+    </button>                   
+                            
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
+       
+    </style>    
+                            
+                        <button>2 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  
+  
+  
+
+  <script>
+   // Load saved likes and views from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load initial likes and views
+            loadCounts('likes1', 'likesCount1', 'views1', 'viewsCount1');
+            loadCounts('likes2', 'likesCount2', 'views2', 'viewsCount2');
+
+            // Add event listeners for images to track views
+            document.getElementById('image1').addEventListener('click', function () {
+                incrementViews('views1', 'viewsCount1');
+            });
+
+            document.getElementById('image2').addEventListener('click', function () {
+                incrementViews('views2', 'viewsCount2');
+            });
+        });
+
+        // Function to increment likes
+        function incrementLikes(likeId, storageKey) {
+            let likesElement = document.getElementById(likeId);
+            let currentLikes = parseInt(localStorage.getItem(storageKey) || 0);
+            currentLikes++;
+            likesElement.innerText = currentLikes + " likes";
+            localStorage.setItem(storageKey, currentLikes);  // Save to localStorage
+        }
+
+        // Function to increment views
+        function incrementViews(viewId, storageKey) {
+            let viewsElement = document.getElementById(viewId);
+            let currentViews = parseInt(localStorage.getItem(storageKey) || 0);
+            currentViews++;
+            viewsElement.innerText = currentViews + " views";
+            localStorage.setItem(storageKey, currentViews);  // Save to localStorage
+        }
+
+        // Function to load saved counts from localStorage
+        function loadCounts(likeId, likeStorageKey, viewId, viewStorageKey) {
+            let likesElement = document.getElementById(likeId);
+            let viewsElement = document.getElementById(viewId);
+
+            let savedLikes = localStorage.getItem(likeStorageKey) || 0;
+            let savedViews = localStorage.getItem(viewStorageKey) || 0;
+
+            likesElement.innerText = savedLikes + " likes";
+            viewsElement.innerText = savedViews + " views";
+        }</script>
+
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     <script>
+   // Load saved likes and views from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load initial likes and views
+            loadCounts('likes1', 'likesCount1', 'views1', 'viewsCount1');
+            loadCounts('likes2', 'likesCount2', 'views2', 'viewsCount2');
+
+            // Add event listeners for images to track views
+            document.getElementById('image1').addEventListener('click', function () {
+                incrementViews('views1', 'viewsCount1');
+            });
+
+            document.getElementById('image2').addEventListener('click', function () {
+                incrementViews('views2', 'viewsCount2');
+            });
+        });
+
+        // Function to increment likes
+        function incrementLikes(likeId, storageKey) {
+            let likesElement = document.getElementById(likeId);
+            let currentLikes = parseInt(localStorage.getItem(storageKey) || 0);
+            currentLikes++;
+            likesElement.innerText = currentLikes + " likes";
+            localStorage.setItem(storageKey, currentLikes);  // Save to localStorage
+        }
+
+        // Function to increment views
+        function incrementViews(viewId, storageKey) {
+            let viewsElement = document.getElementById(viewId);
+            let currentViews = parseInt(localStorage.getItem(storageKey) || 0);
+            currentViews++;
+            viewsElement.innerText = currentViews + " views";
+            localStorage.setItem(storageKey, currentViews);  // Save to localStorage
+        }
+
+        // Function to load saved counts from localStorage
+        function loadCounts(likeId, likeStorageKey, viewId, viewStorageKey) {
+            let likesElement = document.getElementById(likeId);
+            let viewsElement = document.getElementById(viewId);
+
+            let savedLikes = localStorage.getItem(likeStorageKey) || 0;
+            let savedViews = localStorage.getItem(viewStorageKey) || 0;
+
+            likesElement.innerText = savedLikes + " likes";
+            viewsElement.innerText = savedViews + " views";
+        }</script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+       <link
+        rel="stylesheet"
+        href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .swiper-container {
+            width: 100%;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        .card img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .card-content h3 {
+            margin: 10px 0;
+        }
+        .card-content p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Swiper container -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250x150?text=TomDee+Ug" alt="TomDee Ug">
+                    <div class="card-content">
+                        <h3>TomDee Ug</h3>
+                        <p>Description or details for TomDee Ug.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250x150?text=Jordan+Shelz" alt="Jordan Shelz">
+                    <div class="card-content">
+                        <h3>Jordan Shelz</h3>
+                        <p>Description or details for Jordan Shelz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250x150?text=Crush+Kdr" alt="Crush Kdr">
+                    <div class="card-content">
+                        <h3>Crush Kdr</h3>
+                        <p>Description or details for Crush Kdr.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 2,
+            spaceBetween: 2,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            // Enable touch gestures
+            grabCursor: true,
+        });
+    
+            
+
+   
+</script>
+    
+ 
+    
+    
+     <script>
+   // Load saved likes and views from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load initial likes and views
+            loadCounts('likes1', 'likesCount1', 'views1', 'viewsCount1');
+            loadCounts('likes2', 'likesCount2', 'views2', 'viewsCount2');
+
+            // Add event listeners for images to track views
+            document.getElementById('image1').addEventListener('click', function () {
+                incrementViews('views1', 'viewsCount1');
+            });
+
+            document.getElementById('image2').addEventListener('click', function () {
+                incrementViews('views2', 'viewsCount2');
+            });
+        });
+
+        // Function to increment likes
+        function incrementLikes(likeId, storageKey) {
+            let likesElement = document.getElementById(likeId);
+            let currentLikes = parseInt(localStorage.getItem(storageKey) || 0);
+            currentLikes++;
+            likesElement.innerText = currentLikes + " likes";
+            localStorage.setItem(storageKey, currentLikes);  // Save to localStorage
+        }
+
+        // Function to increment views
+        function incrementViews(viewId, storageKey) {
+            let viewsElement = document.getElementById(viewId);
+            let currentViews = parseInt(localStorage.getItem(storageKey) || 0);
+            currentViews++;
+            viewsElement.innerText = currentViews + " views";
+            localStorage.setItem(storageKey, currentViews);  // Save to localStorage
+        }
+
+        // Function to load saved counts from localStorage
+        function loadCounts(likeId, likeStorageKey, viewId, viewStorageKey) {
+            let likesElement = document.getElementById(likeId);
+            let viewsElement = document.getElementById(viewId);
+
+            let savedLikes = localStorage.getItem(likeStorageKey) || 0;
+            let savedViews = localStorage.getItem(viewStorageKey) || 0;
+
+            likesElement.innerText = savedLikes + " likes";
+            viewsElement.innerText = savedViews + " views";
+        }</script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <div class="tutorial-card">
+            <img src="c.jpg"  " alt="mana.jpg" class="image" id="image1">
+            <div class="tutorial-info">
+                <h2>Mana - Installation</h2>
+                <p id="views1">0 views</p>
+                <div class="actions">
+                    <span id="likes1">0 likes</span>
+                    <div class="like-save">
+                        <button  class="like-button"   onclick="incrementLikes('likes1', 'likesCount1')"> <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span>
+    </button>                   
+                            
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
+       
+    </style>    
+                            
+                        <button>2 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  
+  
+  
+
+  <script>
+   // Load saved likes and views from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load initial likes and views
+            loadCounts('likes1', 'likesCount1', 'views1', 'viewsCount1');
+            loadCounts('likes2', 'likesCount2', 'views2', 'viewsCount2');
+
+            // Add event listeners for images to track views
+            document.getElementById('image1').addEventListener('click', function () {
+                incrementViews('views1', 'viewsCount1');
+            });
+
+            document.getElementById('image2').addEventListener('click', function () {
+                incrementViews('views2', 'viewsCount2');
+            });
+        });
+
+        // Function to increment likes
+        function incrementLikes(likeId, storageKey) {
+            let likesElement = document.getElementById(likeId);
+            let currentLikes = parseInt(localStorage.getItem(storageKey) || 0);
+            currentLikes++;
+            likesElement.innerText = currentLikes + " likes";
+            localStorage.setItem(storageKey, currentLikes);  // Save to localStorage
+        }
+
+        // Function to increment views
+        function incrementViews(viewId, storageKey) {
+            let viewsElement = document.getElementById(viewId);
+            let currentViews = parseInt(localStorage.getItem(storageKey) || 0);
+            currentViews++;
+            viewsElement.innerText = currentViews + " views";
+            localStorage.setItem(storageKey, currentViews);  // Save to localStorage
+        }
+
+        // Function to load saved counts from localStorage
+        function loadCounts(likeId, likeStorageKey, viewId, viewStorageKey) {
+            let likesElement = document.getElementById(likeId);
+            let viewsElement = document.getElementById(viewId);
+
+            let savedLikes = localStorage.getItem(likeStorageKey) || 0;
+            let savedViews = localStorage.getItem(viewStorageKey) || 0;
+
+            likesElement.innerText = savedLikes + " likes";
+            viewsElement.innerText = savedViews + " views";
+        }</script>
+
+    
+    
+    
+        <div class="tutorial-card">
+            <img src="c.jpg"  " alt="mana.jpg" class="image" id="image1">
+            <div class="tutorial-info">
+                <h2>Mana - Installation</h2>
+                <p id="views1">0 views</p>
+                <div class="actions">
+                    <span id="likes1">0 likes</span>
+                    <div class="like-save">
+                        <button  class="like-button"   onclick="incrementLikes('likes1', 'likesCount1')"> <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span>
+    </button>                   
+                            
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
+       
+    </style>    
+                            
+                        <button>2 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  
+  
+  
+
+  <script>
+   // Load saved likes and views from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load initial likes and views
+            loadCounts('likes1', 'likesCount1', 'views1', 'viewsCount1');
+            loadCounts('likes2', 'likesCount2', 'views2', 'viewsCount2');
+
+            // Add event listeners for images to track views
+            document.getElementById('image1').addEventListener('click', function () {
+                incrementViews('views1', 'viewsCount1');
+            });
+
+            document.getElementById('image2').addEventListener('click', function () {
+                incrementViews('views2', 'viewsCount2');
+            });
+        });
+
+        // Function to increment likes
+        function incrementLikes(likeId, storageKey) {
+            let likesElement = document.getElementById(likeId);
+            let currentLikes = parseInt(localStorage.getItem(storageKey) || 0);
+            currentLikes++;
+            likesElement.innerText = currentLikes + " likes";
+            localStorage.setItem(storageKey, currentLikes);  // Save to localStorage
+        }
+
+        // Function to increment views
+        function incrementViews(viewId, storageKey) {
+            let viewsElement = document.getElementById(viewId);
+            let currentViews = parseInt(localStorage.getItem(storageKey) || 0);
+            currentViews++;
+            viewsElement.innerText = currentViews + " views";
+            localStorage.setItem(storageKey, currentViews);  // Save to localStorage
+        }
+
+        // Function to load saved counts from localStorage
+        function loadCounts(likeId, likeStorageKey, viewId, viewStorageKey) {
+            let likesElement = document.getElementById(likeId);
+            let viewsElement = document.getElementById(viewId);
+
+            let savedLikes = localStorage.getItem(likeStorageKey) || 0;
+            let savedViews = localStorage.getItem(viewStorageKey) || 0;
+
+            likesElement.innerText = savedLikes + " likes";
+            viewsElement.innerText = savedViews + " views";
+        }</script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <div class="tutorial-card">
+            <img src="c.jpg"  " alt="mana.jpg" class="image" id="image1">
+            <div class="tutorial-info">
+                <h2>Mana - Installation</h2>
+                <p id="views1">0 views</p>
+                <div class="actions">
+                    <span id="likes1">0 likes</span>
+                    <div class="like-save">
+                        <button  class="like-button"   onclick="incrementLikes('likes1', 'likesCount1')"> <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span>
+    </button>                   
+                            
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
+       
+    </style>    
+                            
+                        <button>2 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  
+  
+  
+
+  <script>
+   // Load saved likes and views from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load initial likes and views
+            loadCounts('likes1', 'likesCount1', 'views1', 'viewsCount1');
+            loadCounts('likes2', 'likesCount2', 'views2', 'viewsCount2');
+
+            // Add event listeners for images to track views
+            document.getElementById('image1').addEventListener('click', function () {
+                incrementViews('views1', 'viewsCount1');
+            });
+
+            document.getElementById('image2').addEventListener('click', function () {
+                incrementViews('views2', 'viewsCount2');
+            });
+        });
+
+        // Function to increment likes
+        function incrementLikes(likeId, storageKey) {
+            let likesElement = document.getElementById(likeId);
+            let currentLikes = parseInt(localStorage.getItem(storageKey) || 0);
+            currentLikes++;
+            likesElement.innerText = currentLikes + " likes";
+            localStorage.setItem(storageKey, currentLikes);  // Save to localStorage
+        }
+
+        // Function to increment views
+        function incrementViews(viewId, storageKey) {
+            let viewsElement = document.getElementById(viewId);
+            let currentViews = parseInt(localStorage.getItem(storageKey) || 0);
+            currentViews++;
+            viewsElement.innerText = currentViews + " views";
+            localStorage.setItem(storageKey, currentViews);  // Save to localStorage
+        }
+
+        // Function to load saved counts from localStorage
+        function loadCounts(likeId, likeStorageKey, viewId, viewStorageKey) {
+            let likesElement = document.getElementById(likeId);
+            let viewsElement = document.getElementById(viewId);
+
+            let savedLikes = localStorage.getItem(likeStorageKey) || 0;
+            let savedViews = localStorage.getItem(viewStorageKey) || 0;
+
+            likesElement.innerText = savedLikes + " likes";
+            viewsElement.innerText = savedViews + " views";
+        }</script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <div class="tutorial-card">
+            <img src="c.jpg"  " alt="mana.jpg" class="image" id="image1">
+            <div class="tutorial-info">
+                <h2>Mana - Installation</h2>
+                <p id="views1">0 views</p>
+                <div class="actions">
+                    <span id="likes1">0 likes</span>
+                    <div class="like-save">
+                        <button  class="like-button"   onclick="incrementLikes('likes1', 'likesCount1')"> <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span>
+    </button>                   
+                            
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
+       
+    </style>    
+                            
+                        <button>2 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  
+  
+  
+
+  <script>
+   // Load saved likes and views from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load initial likes and views
+            loadCounts('likes1', 'likesCount1', 'views1', 'viewsCount1');
+            loadCounts('likes2', 'likesCount2', 'views2', 'viewsCount2');
+
+            // Add event listeners for images to track views
+            document.getElementById('image1').addEventListener('click', function () {
+                incrementViews('views1', 'viewsCount1');
+            });
+
+            document.getElementById('image2').addEventListener('click', function () {
+                incrementViews('views2', 'viewsCount2');
+            });
+        });
+
+        // Function to increment likes
+        function incrementLikes(likeId, storageKey) {
+            let likesElement = document.getElementById(likeId);
+            let currentLikes = parseInt(localStorage.getItem(storageKey) || 0);
+            currentLikes++;
+            likesElement.innerText = currentLikes + " likes";
+            localStorage.setItem(storageKey, currentLikes);  // Save to localStorage
+        }
+
+        // Function to increment views
+        function incrementViews(viewId, storageKey) {
+            let viewsElement = document.getElementById(viewId);
+            let currentViews = parseInt(localStorage.getItem(storageKey) || 0);
+            currentViews++;
+            viewsElement.innerText = currentViews + " views";
+            localStorage.setItem(storageKey, currentViews);  // Save to localStorage
+        }
+
+        // Function to load saved counts from localStorage
+        function loadCounts(likeId, likeStorageKey, viewId, viewStorageKey) {
+            let likesElement = document.getElementById(likeId);
+            let viewsElement = document.getElementById(viewId);
+
+            let savedLikes = localStorage.getItem(likeStorageKey) || 0;
+            let savedViews = localStorage.getItem(viewStorageKey) || 0;
+
+            likesElement.innerText = savedLikes + " likes";
+            viewsElement.innerText = savedViews + " views";
+        }</script>
+
+    
+    
+    
+
+
+  
+        <div class="tutorial-card">
+            <img src="c.jpg"  " alt="mana.jpg" class="image" id="image1">
+            <div class="tutorial-info">
+                <h2>Mana - Installation</h2>
+                <p id="views1">0 views</p>
+                <div class="actions">
+                    <span id="likes1">0 likes</span>
+                    <div class="like-save">
+                        <button  class="like-button"   onclick="incrementLikes('likes1', 'likesCount1')"> <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span>
+    </button>                   
+                            
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    
+       
+    </style>    
+                            
+                        <button>2 Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+  
+  
+  
+
+  <script>
+   // Load saved likes and views from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load initial likes and views
+            loadCounts('likes1', 'likesCount1', 'views1', 'viewsCount1');
+            loadCounts('likes2', 'likesCount2', 'views2', 'viewsCount2');
+
+            // Add event listeners for images to track views
+            document.getElementById('image1').addEventListener('click', function () {
+                incrementViews('views1', 'viewsCount1');
+            });
+
+            document.getElementById('image2').addEventListener('click', function () {
+                incrementViews('views2', 'viewsCount2');
+            });
+        });
+
+        // Function to increment likes
+        function incrementLikes(likeId, storageKey) {
+            let likesElement = document.getElementById(likeId);
+            let currentLikes = parseInt(localStorage.getItem(storageKey) || 0);
+            currentLikes++;
+            likesElement.innerText = currentLikes + " likes";
+            localStorage.setItem(storageKey, currentLikes);  // Save to localStorage
+        }
+
+        // Function to increment views
+        function incrementViews(viewId, storageKey) {
+            let viewsElement = document.getElementById(viewId);
+            let currentViews = parseInt(localStorage.getItem(storageKey) || 0);
+            currentViews++;
+            viewsElement.innerText = currentViews + " views";
+            localStorage.setItem(storageKey, currentViews);  // Save to localStorage
+        }
+
+        // Function to load saved counts from localStorage
+        function loadCounts(likeId, likeStorageKey, viewId, viewStorageKey) {
+            let likesElement = document.getElementById(likeId);
+            let viewsElement = document.getElementById(viewId);
+
+            let savedLikes = localStorage.getItem(likeStorageKey) || 0;
+            let savedViews = localStorage.getItem(viewStorageKey) || 0;
+
+            likesElement.innerText = savedLikes + " likes";
+            viewsElement.innerText = savedViews + " views";
+        }</script>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Box with WhatsApp Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .comment-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .comment-input {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .comment-input textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            resize: none;
+            font-size: 14px;
+            background-color: #f5f6f7;
+        }
+
+        .comment-input button {
+            background-color: #25d366; /* WhatsApp green color */
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .comment-input button:disabled {
+            background-color: #b0d4ff;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="comment-box">
+        <div class="comment-input">
+            <textarea id="comment" rows="1" placeholder="Write a comment..."></textarea>
+            <button id="submitBtn" disabled>Submit to WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        const commentInput = document.getElementById('comment');
+        const submitBtn = document.getElementById('submitBtn');
+
+        const whatsappNumber = 'whatsapp:+1234567890'; // Replace with the user's WhatsApp number (use full international format)
+
+        commentInput.addEventListener('input', function() {
+            if (commentInput.value.trim() !== "") {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        });
+
+        submitBtn.addEventListener('click', function() {
+            let commentText = commentInput.value.trim();
+
+            if (commentText === "") {
+                return;
+            }
+
+            // Generate WhatsApp Click-to-Chat URL with the message
+            let whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(commentText)}`;
+
+            // Open WhatsApp with the comment pre-filled
+            window.open(whatsappURL, '_blank');
+
+            // Clear the comment box and disable the button
+            commentInput.value = "";
+            submitBtn.disabled = true;
+        });
+    </script>
+
+</body>
+</html>
+    
+    
+    
+    
+
+    
+    
+    
+    
+     
+
+
+<!-- Tutorial Card 2 -->
+        <div class="tutorial-card">
+            <img src="c.jpg" alt="Termux Alpine" class="image" id="image3">
+            <div class="tutorial-info">
+                <h2>Termux Alpine - Installation</h2>
+                <p id="views2">0 views</p>
+                <div class="actions">
+                    <span id="likes2">0 likes</span>
+                    <div class="like-save">
+                        <button  onclick="incrementLikes('likes2', 'likesCount2')">  <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span></button>
+    </button>                   
+                            
+                        <button>💾 Save</button> </div>    
+                </div>
+            </div>
+        </div>
+
+     <link
+        rel="stylesheet"
+        href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .swiper-container {
+            width: 100%;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        .card img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .card-content h3 {
+            margin: 10px 0;
+        }
+        .card-content p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Swiper container -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250x150?text=TomDee+Ug" alt="TomDee Ug">
+                    <div class="card-content">
+                        <h3>TomDee Ug</h3>
+                        <p>Description or details for TomDee Ug.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250x150?text=Jordan+Shelz" alt="Jordan Shelz">
+                    <div class="card-content">
+                        <h3>Jordan Shelz</h3>
+                        <p>Description or details for Jordan Shelz.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="card">
+                    <img src="https://via.placeholder.com/250x150?text=Crush+Kdr" alt="Crush Kdr">
+                    <div class="card-content">
+                        <h3>Crush Kdr</h3>
+                        <p>Description or details for Crush Kdr.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 2,
+            spaceBetween: 2,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            // Enable touch gestures
+            grabCursor: true,
+        });
+    
+            
+
+   
+</script>
+            
+
+    <div class="bottom-nav">
+        <button>
+            <span>
+        <a href="products.html""><img src="product.png"width="50" height="50" ></a>  
+            </span>
+            <span>Products </span>
+        </button>
+            
+        <button>
+        
+            <span>   <a href="services.html">
+            <img src="service.png" width="50" height="50"></a></span>
+            <span>Services</span> 
+        
+        </button>
+        <button>
+            <span><img src="tech.png" width="50" height="50"></span>
+            <span>Tech</span>
+        </button></a>
+    </div>
+
+    
+    
+
+    
+   
+
+
+   
+    
+    
+<div class="tutorial-card">
+            <img src="b.jpg" alt="Termux Alpine" class="image" id="image2">
+            <div class="tutorial-info">
+                <h2>Termux Alpine - Installation</h2>
+                <p id="views2">0 views</p>
+                <div class="actions">
+                    <span id="likes2">0 likes</span>
+                    <div class="like-save">
+                        <button onclick="incrementLikes('likes2', 'likesCount2')">
+ <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span>
+    </button>                   
+                            <button>💾 Save</button>
+                        
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+
+
+
+ <div class="tutorial-card">
+            <img src="c.jpg"  " alt="mana.jpg" class="image" id="image1">
+            <div class="tutorial-info">
+                <h2>Mana - Installation</h2>
+                <p id="views1">0 views</p>
+                <div class="actions">
+                    <span id="likes1">0 likes</span>
+                    <div class="like-save">
+                        <button  class="like-button"   onclick="incrementLikes('likes1', 'likesCount1')"> <i class="fas fa-thumbs-up thumb-icon"></i>
+        <span class="like-text">Like</span>
+    </button>                   
+                            
+              
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Box with WhatsApp Subm<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .comment-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .comment-input {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .comment-input textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            resize: none;
+            font-size: 14px;
+            background-color: #f5f6f7;
+        }
+
+        .comment-input button {
+            background-color: #25d366; /* WhatsApp green color */
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .comment-input button:disabled {
+            background-color: #b0d4ff;
+            cursor: not-allowed;
+        }
+
+    </style>
+</head>
+
+
+    <div class="comment-box">
+        <div class="comment-input">
+            <textarea id="comment" rows="1" placeholder="Write a comment..."></textarea>
+            <button id="submitBtn" disabled>Submit to WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        const commentInput = document.getElementById('comment');
+        const submitBtn = document.getElementById('submitBtn');
+
+        const whatsappNumber = 'whatsapp:+1234567890'; // Replace with the user's WhatsApp number (use full international format)
+
+        commentInput.addEventListener('input', function() {
+            if (commentInput.value.trim() !== "") {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        });
+
+        submitBtn.addEventListener('click', function() {
+            let commentText = commentInput.value.trim();
+
+            if (commentText === "") {
+                return;
+            }
+
+            // Generate WhatsApp Click-to-Chat URL with the message
+            let whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(commentText)}`;
+
+            // Open WhatsApp with the comment pre-filled
+            window.open(whatsappURL, '_blank');
+
+            // Clear the comment box and disable the button
+            commentInput.value = "";
+            submitBtn.disabled = true;
+        });
+    </script>
+                    
+
+
+                     
+
+ 
+    
+
+    
+</body>
+</html>
+    
+    
+</html>
