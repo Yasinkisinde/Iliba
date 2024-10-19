@@ -212,7 +212,7 @@
             margin-bottom: 100px; /* Ensure space for the bottom navbar */
             background-image: url('bada.png'); /
            
-             background image: url(c.jpg);
+            background image: url(c.jpg);
             background-size: cover;
             background-attachment: fixed;
             background-repeat: repeat;
@@ -569,13 +569,22 @@
             background-color: #f4f4f4;
             text-align: center;
         }
-        .post-container {
-            background-color: rgba(34, 34, 34, 0.9); /* Added transparency */
-            border-radius: 25px;
-            padding: 20px;
-            margin-bottom: 20px;
-            order: 2; /* Default order to 2, meaning non-matches will appear lower */
-            transition: order 100s ease;
+    #postSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post-container {
+    background-color: rgba(34, 34, 34, 0.9);
+    border-radius: 25px;
+    padding: 20px;
+    margin-bottom: 2px;
+    order: 2; /* Default order to lower, for older posts */
+    width: 90%;
+    max-width: 500px;
+    transition: order 0.3s ease; /* Smooth order transition */
+}
         }
         .post-container img {
             width: 100%;
