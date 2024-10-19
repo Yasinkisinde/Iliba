@@ -742,24 +742,235 @@
         }
 
         // Function to increase likes for a specific post
+ <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .post-container {
+            background-color: rgba(34, 34, 34, 0.9); /* Added transparency */
+            border-radius: 25px;
+            padding: 20px;
+            margin-bottom: 20px;
+            order: 2; /* Default order to 2, meaning non-matches will appear lower */
+            transition: order 100s ease;
+        }
+        .post-container img {
+            width: 100%;
+            height:50%;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+        .post-details {
+            text-align: left;
+            padding: 10px;
+        }
+        .post-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .add-post-btn {
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border-radius: 50%;
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            cursor: pointer;
+        }
+        #fileInput {
+            display: none;
+        }
+        /* Modal styling for input form */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+        .modal input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .modal button {
+            padding: 10px 15px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="postSection"></div>
+
+    <!-- + Add Post Button fixed at the bottom right -->
+    <button class="add-post-btn" onclick="document.getElementById('fileInput').click()">+</button>
+
+    <!-- Hidden file input for choosing images -->
+    <input type="file" id="fileInput" accept="image/*" onchange="openModal(event)">
+
+    <!-- Modal for entering post details -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <h3>Enter Product Details</h3>
+            <input type="text" id="postTitle" placeholder="Product Title" required>
+            <input type="text" id="postDescription" placeholder="Product Description" required>
+            <input type="number" id="postPrice" placeholder="Product Price" required>
+            <input type="tel" id="postContact" placeholder="Contact Number" required>
+            <button onclick="addNewPost()">Add Post</button>
+        </div>
+    </div>
+
+    <script>
+        let postIndex = localStorage.getItem('postIndex') ? parseInt(localStorage.getItem('postIndex')) : 0;
+        let imageUrl = '';
+
+        // Function to open the modal when an image is selected
+        function openModal(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageUrl = e.target.result;
+                    document.getElementById('postModal').style.display = 'flex'; // Show the modal
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Function to add a new post with the chosen image and user input
+        function addNewPost() {
+            const title = document.getElementById('postTitle').value;
+            const description = document.getElementById('postDescription').value;
+            const price = document.getElementById('postPrice').value;
+            const contact = document.getElementById('postContact').value;
+
+            if (!title || !description || !price || !contact || !imageUrl) {
+                alert("Please fill all fields and select an image.");
+                return;
+            }
+
+            // Create a new post object
+            const post = {
+                id: postIndex,
+                title,
+                description,
+                price,
+                contact,
+                imageUrl,
+                views: 0,
+                likes: 0
+            };
+
+            // Save the post to localStorage
+            let posts = JSON.parse(localStorage.getItem('posts')) || [];
+            posts.unshift(post); // Add the new post to the beginning of the array
+            localStorage.setItem('posts', JSON.stringify(posts));
+            localStorage.setItem('postIndex', postIndex + 1);
+
+            // Create the post element in the DOM
+            createPostElement(post);
+
+            // Increment post index for next post
+            postIndex++;
+
+            // Close the modal and reset form fields
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postDescription').value = '';
+            document.getElementById('postPrice').value = '';
+            document.getElementById('postContact').value = '';
+            document.getElementById('postModal').style.display = 'none';
+        }
+
+        // Function to create a post element
+        function createPostElement(post) {
+            const postContainer = document.createElement('div');
+            postContainer.classList.add('post-container');
+
+            // Create the image element with the selected image
+            const img = document.createElement('img');
+            img.src = post.imageUrl;
+            img.alt = 'Product Image';
+            img.onclick = function() { increaseViews(post.id); };
+
+            // Create post details section with title, description, price, and contact
+            const postDetails = document.createElement('div');
+            postDetails.classList.add('post-details');
+            postDetails.innerHTML = `
+                <h4>${post.title}</h4>
+                <p>Description: ${post.description}</p>
+                <p>Price: UGX ${post.price}</p>
+                <p>Contact: <a href="tel:${post.contact}">${post.contact}</a></p>
+                <p id="viewCount${post.id}">Views: ${post.views}</p>
+                <p id="likeCount${post.id}">Likes: ${post.likes}</p>
+            `;
+
+            // Create action buttons (like and share)
+            const postActions = document.createElement('div');
+            postActions.classList.add('post-actions');
+            postActions.innerHTML = `
+                <button onclick="increaseLikes(${post.id})">
+                    <i class="fas fa-thumbs-up thumb-icon"></i>
+                    <span class="like-text">Like</span>
+                </button>
+                <button onclick="sharePost('${post.title}', '${post.description}', '${post.price}', '${post.contact}')">
+                    🔗 Share
+                </button>
+            `;
+
+            // Append image, details, and actions to the post container
+            postContainer.appendChild(img);
+            postContainer.appendChild(postDetails);
+            postContainer.appendChild(postActions);
+
+            // Add the new post at the top of the section
+            const postSection = document.getElementById('postSection');
+            postSection.insertBefore(postContainer, postSection.firstChild);
+        }
+
+        // Function to increase likes for a specific post
         function increaseLikes(index) {
-            let likes = localStorage.getItem(`likes${index}`) ? parseInt(localStorage.getItem(`likes${index}`)) : 0;
-            likes++;
-            document.getElementById(`likeCount${index}`).innerText = `Likes: ${likes}`;
-            localStorage.setItem(`likes${index}`, likes);
+            let posts = JSON.parse(localStorage.getItem('posts')) || [];
+            let post = posts.find(p => p.id === index);
+            post.likes++;
+            document.getElementById(`likeCount${index}`).innerText = `Likes: ${post.likes}`;
+            localStorage.setItem('posts', JSON.stringify(posts));
         }
 
         // Function to increase views for a specific post
         function increaseViews(index) {
-            let views = localStorage.getItem(`views${index}`) ? parseInt(localStorage.getItem(`views${index}`)) : 0;
-            views++;
-            document.getElementById(`viewCount${index}`).innerText = `Views: ${views}`;
-            localStorage.setItem(`views${index}`, views);
+            let posts = JSON.parse(localStorage.getItem('posts')) || [];
+            let post = posts.find(p => p.id === index);
+            post.views++;
+            document.getElementById(`viewCount${index}`).innerText = `Views: ${post.views}`;
+            localStorage.setItem('posts', JSON.stringify(posts));
         }
 
-        // Function to share the post via social media
+        // Function to share the post via social
+  // Function to share the post via social media
         function sharePost(title, description, price, contact) {
-            const postText = `Check out this product: ${title}\nDescription: ${description}\nPrice: $${price}\nContact: ${contact}`;
+            const postText = `Check out this product: ${title}\nDescription: ${description}\nPrice: UGX ${price}\nContact: ${contact}`;
             if (navigator.share) {
                 navigator.share({
                     title: title,
@@ -771,7 +982,7 @@
             }
         }
 
-        // Load posts from localStorage on page load
+        // Function to load posts from localStorage when the page loads
         window.onload = function() {
             let posts = JSON.parse(localStorage.getItem('posts')) || [];
             posts.forEach(post => createPostElement(post));
