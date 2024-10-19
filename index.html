@@ -60,8 +60,8 @@
 
     <div class="comment-box">
         <div class="comment-input">
-            <textarea id="comment" rows="1" placeholder="Support......"></textarea>
-            <button id="submitBtn" disabled>lets chat</button>
+            <textarea id="comment" rows="1" placeholder="Support/Writetothedeveloper..."></textarea>
+            <button id="submitBtn" disabled>WhatsApp developer</button>
         </div>
     </div>
 
@@ -293,7 +293,7 @@
         }
 
         .tutorial-card {
-            background-color: rgba(34, 34, 34, 0.9); /* Added transparency */
+            background-color: white; /* Added transparency */
             border-radius: 25px;
             padding: 20px;
             margin-bottom: 10px;
@@ -558,191 +558,12 @@
 
 </body><br>
 
-     
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        .post-container {
-            background-color: rgba(34, 34, 34, 0.9); /* Added transparency */
-            border-radius: 25px;
-            padding: 20px;
-            margin-bottom: 20px;
-            order: 2; /* Default order to 2, meaning non-matches will appear lower */
-            transition: order 100s ease;
-        }
-        .post-container img {
-            width: 100%;
-            height:50%;
-            border-radius: 25px;
-            cursor: pointer;
-        }
-        .post-details {
-            text-align: left;
-            padding: 10px;
-        }
-        .post-actions {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .add-post-btn {
-            padding: 10px 20px;
-            background-color: green;
-            color: white;
-            border-radius: 50%;
-            position: fixed;
-            top: 50px;
-            right: 20px;
-            cursor: pointer;
-        }
-        #fileInput {
-            display: none;
-        }
-        /* Modal styling for input form */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-        }
-        .modal input {
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .modal button {
-            padding: 10px 15px;
-            background-color: green;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="postSection"></div>
-
-    <!-- + Add Post Button fixed at the bottom right -->
-    <button class="add-post-btn" onclick="document.getElementById('fileInput').click()">+</button>
-
-    <!-- Hidden file input for choosing images -->
-    <input type="file" id="fileInput" accept="image/*" onchange="openModal(event)">
-
-    <!-- Modal for entering post details -->
-    <div id="postModal" class="modal">
-        <div class="modal-content">
-            <h3>Enter Product Details</h3>
-            <input type="text" id="postTitle" placeholder="Product Title" required>
-            <input type="text" id="postDescription" placeholder="Product Description" required>
-            <input type="number" id="postPrice" placeholder="Product Price" required>
-            <input type="tel" id="postContact" placeholder="Contact Number" required>
-            <button onclick="addNewPost()">Add Post</button>
-        </div>
-    </div>
-
-    <script>
-        let postIndex = localStorage.getItem('postIndex') ? parseInt(localStorage.getItem('postIndex')) : 0;
-        let imageUrl = '';
-
-        // Function to open the modal when an image is selected
-        function openModal(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imageUrl = e.target.result;
-                    document.getElementById('postModal').style.display = 'flex'; // Show the modal
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // Function to add a new post with the chosen image and user input
-        function addNewPost() {
-            const title = document.getElementById('postTitle').value;
-            const description = document.getElementById('postDescription').value;
-            const price = document.getElementById('postPrice').value;
-            const contact = document.getElementById('postContact').value;
-
-            // Create a new post container
-            const postContainer = document.createElement('div');
-            postContainer.classList.add('post-container');
-
-            // Create the image element with the selected image
-            const img = document.createElement('img');
-            img.src = imageUrl;
-            img.alt = 'Product Image';
-            img.onclick = function() { increaseViews(postIndex); };
-
-            // Create post details section with title, description, price, and contact
-            const postDetails = document.createElement('div');
-            postDetails.classList.add('post-details');
-            postDetails.innerHTML = `
-                <h4>${title}</h4>
-                <p>Description: ${description}</p>
-                <p>Price: UGX${price}</p>
-                <p>Contact: <a href="tel:${contact}">${contact}</a></p>
-                <p id="viewCount${postIndex}">Views: 0</p>
-                <p id="likeCount${postIndex}">Likes: 0</p>
-            `;
-
-            // Create action buttons (like and share)
-            const postActions = document.createElement('div');
-            postActions.classList.add('post-actions');
-            postActions.innerHTML = `
-                <button onclick="increaseLikes(${postIndex})">
-                    <i class="fas fa-thumbs-up thumb-icon"></i>
-        <span class="like-text">Like</span>
-                </button>
-                <button onclick="sharePost('${title}', '${description}', '${price}', '${contact}')">
-                    🔗 Share
-                </button>
-            `;
-
-            // Append image, details, and actions to the post container
-            postContainer.appendChild(img);
-            postContainer.appendChild(postDetails);
-            postContainer.appendChild(postActions);
-
-            // Add the new post at the top of the section
-            const postSection = document.getElementById('postSection');
-            postSection.insertBefore(postContainer, postSection.firstChild);
-
-            // Initialize likes and views for the new post
-            localStorage.setItem(`likes${postIndex}`, 0);
-            localStorage.setItem(`views${postIndex}`, 0);
-
-            postIndex++;
-
-            // Reset the modal and close it
-            document.getElementById('postTitle').value = '';
-            document.getElementById('postDescription').value = '';
-            document.getElementById('postPrice').value = '';
-            document.getElementById('postContact').value = '';
-            document.getElementById('postModal').style.display = 'none';
-        }
-
-        // Function to increase likes for a specific post
- <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -1008,7 +829,7 @@
     
        <link
         rel="stylesheet"
-        href="https://unpkg.com/swiper/swiper-bundle.min.css"
+        href="https://unpkg.com/swiper/swiper-bundle.min.cs"
     />
 
     <style>
@@ -1027,7 +848,7 @@
             overflow: hidden;
         }
         .swiper-slide {
-            display: flex;
+            display: ;
             justify-content: center;
             align-items: center;
         }
@@ -1042,7 +863,7 @@
         }
         .card img {
             max-width: 10%;
-            height: 120px;
+            height: 12px;
             object-fit: cover;
         }
         .card-content {
@@ -1094,7 +915,7 @@
     </div>
 
     <!-- Swiper JS -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.s"></script>
 
     <!-- Initialize Swiper -->
     <script>
