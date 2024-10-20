@@ -557,9 +557,7 @@
         
 
 </body><br>
-
-     
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -686,11 +684,63 @@
             }
 
             const formData = new FormData();
-            formData.appe
+            formData.append('file', dataURLtoBlob(imageUrl)); 
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('contact', contact);
 
-</body>
-</html>
+            try {
+                const response = await fetch('http://localhost:3000/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const post = await response.json();
+                    createPostElement(post);
+                    resetModal();
+                } else {
+                    const errorText = await response.text();
+                    alert('Failed to upload post: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while uploading the post: ' + error.message);
+            }
+        }
+
+        function dataURLtoBlob(dataURL) {
+            const byteString = atob(dataURL.split(',')[1]);
+            const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mimeString });
+        }
+
+        function createPostElement(post) {
+            const postContainer = document.createElement('div');
+            postContainer.classList.add('post-container');
+
+            const img = document.createElement('img');
+            img.src = post.imageUrl; // Use the uploaded image URL from the server
+            img.alt = 'Product Image';
+
+            const postDetails = document.createElement('div');
+            postDetails.classList.add('post-details');
+            postDetails.innerHTML = `
+                <h4>${post.title}</h4>
+                <p>Description: ${post.description}</p>
+                <p>Price: UGX ${post.price}</p>
+                <p>Contact: <a href="tel:${post.contact}">${post.contact}</a></p>
+                <div class="post-actions">
+                    <button onclick="likePost(${post.id})">
+     
     
+
 
 
 
