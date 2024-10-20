@@ -587,6 +587,11 @@
             text-align: left;
             padding: 1px;
         }
+        .post-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
         .add-post-btn {
             padding: 10px 20px;
             background-color: green;
@@ -686,6 +691,8 @@
             formData.append('description', description);
             formData.append('price', price);
             formData.append('contact', contact);
+            formData.append('likes', 0);  // Initialize likes
+            formData.append('views', 0);  // Initialize views
 
             try {
                 const response = await fetch('http://localhost:3000/upload', {
@@ -695,6 +702,8 @@
 
                 if (response.ok) {
                     const post = await response.json();
+                    console.log("Uploaded post:", post); // Log the post object directly
+
                     createPostElement(post);
                     resetModal();
                 } else {
@@ -732,6 +741,8 @@
                 <p>Description: ${post.description}</p>
                 <p>Price: UGX ${post.price}</p>
                 <p>Contact: <a href="tel:${post.contact}">${post.contact}</a></p>
+                <p>Likes: ${post.likes || 0}</p>
+                <p>Views: ${post.views || 0}</p>
             `;
 
             postContainer.appendChild(img);
@@ -747,13 +758,15 @@
             imageUrl = '';
             document.getElementById('postModal').style.display = 'none';
         }
+
+        // Load existing posts on window load (optional)
+        window.onload = function() {
+            // Load existing posts if needed
+        };
     </script>
 
 </body>
 </html>
-    
-    
-    
     
 
 
