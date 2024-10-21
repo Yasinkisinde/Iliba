@@ -542,7 +542,9 @@
     setInterval(showSlides, 900);</script>
 </script>
 
-        <!DOCTYPE html>
+
+    
+            <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -559,6 +561,7 @@
             border-radius: 25px;
             padding: 20px;
             margin-bottom: 2px;
+            color: white;
         }
         .post-container img {
             width: 100%;
@@ -643,7 +646,6 @@
     </div>
 
     <script>
-        let postIndex = localStorage.getItem('postIndex') ? parseInt(localStorage.getItem('postIndex')) : 0;
         let imageUrl = '';
 
         function openModal(event) {
@@ -683,7 +685,7 @@
                 });
 
                 if (response.ok) {
-                    const post = await response.json(); // Adjust based on your server's response
+                    const post = await response.json();
                     createPostElement(post);
                     resetModal();
                 } else {
@@ -711,8 +713,9 @@
             postContainer.classList.add('post-container');
 
             const img = document.createElement('img');
-            img.src = post.imageUrl; // Use the uploaded image URL from the server
+            img.src = post.imageUrl;
             img.alt = 'Product Image';
+            img.onclick = () => incrementView(post.id);
 
             const postDetails = document.createElement('div');
             postDetails.classList.add('post-details');
@@ -720,16 +723,14 @@
                 <h4>${post.title}</h4>
                 <p>Description: ${post.description}</p>
                 <p>Price: UGX ${post.price}</p>
-                <p>Contact: <a href="tel:${post.contact}">${post.contact}</a></p>
+               <p>Contact: <a href="tel:${post.contact}">${post.contact}</a></p>
             `;
 
-            const postActions = document.createElement('divconst postActions = document.createElement('div');
+            const postActions = document.createElement('div');
             postActions.classList.add('post-actions');
             postActions.innerHTML = `
-                <button onclick="likePost(${post.id})">Like</button>
-                <button onclick="viewPost(${post.id})">View</button>
-                <p id="likes-${post.id}">Likes: ${post.likes}</p>
-                <p id="views-${post.id}">Views: ${post.views}</p>
+                <button onclick="incrementLike(${post.id})">❤️ ${post.likes}</button>
+                <button onclick="incrementView(${post.id})">👁️ ${post.views}</button>
             `;
 
             postContainer.appendChild(img);
@@ -739,17 +740,14 @@
             document.getElementById('postSection').appendChild(postContainer);
         }
 
-        async function likePost(postId) {
+        async function incrementLike(postId) {
             try {
-                const response = await fetch(`http://localhost:3000/like/${postId}`, {
-                    method: 'POST',
-                });
-
+                const response = await fetch(`http://localhost:3000/like/${postId}`, { method: 'POST' });
                 if (response.ok) {
-                    const result = await response.json();
-                    document.getElementById(`likes-${postId}`).innerText = `Likes: ${result.likes}`;
+                    const { likes } = await response.json();
+                    alert(`Post liked! Total Likes: ${likes}`);
                 } else {
-                    alert('Failed to like the post.');
+                    alert('Failed to like post.');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -757,17 +755,14 @@
             }
         }
 
-        async function viewPost(postId) {
+        async function incrementView(postId) {
             try {
-                const response = await fetch(`http://localhost:3000/view/${postId}`, {
-                    method: 'POST',
-                });
-
+                const response = await fetch(`http://localhost:3000/view/${postId}`, { method: 'POST' });
                 if (response.ok) {
-                    const result = await response.json();
-                    document.getElementById(`views-${postId}`).innerText = `Views: ${result.views}`;
+                    const { views } = await response.json();
+                    alert(`Post viewed! Total Views: ${views}`);
                 } else {
-                    alert('Failed to view the post.');
+                    alert('Failed to view post.');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -776,17 +771,16 @@
         }
 
         function resetModal() {
-            document.getElementById('postModal').style.display = 'none';
             document.getElementById('postTitle').value = '';
             document.getElementById('postDescription').value = '';
             document.getElementById('postPrice').value = '';
             document.getElementById('postContact').value = '';
+            imageUrl = '';
+            document.getElementById('postModal').style.display = 'none';
         }
-
     </script>
 </body>
 </html>
-
 
 
   
