@@ -544,7 +544,7 @@
 
 
     
-            <!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -560,7 +560,7 @@
             background-color: rgba(34, 34, 34, 0.9);
             border-radius: 25px;
             padding: 20px;
-            margin-bottom: 2px;
+            margin-bottom: 20px;
             color: white;
         }
         .post-container img {
@@ -571,15 +571,23 @@
         }
         .post-details {
             text-align: left;
-            padding: 1px;
+            padding: 10px;
         }
         .post-actions {
             margin-top: 10px;
             display: flex;
             justify-content: space-between;
         }
+        .like-btn, .view-btn {
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
         .add-post-btn {
-            padding: 10px 20px;
+            padding: 15px;
             background-color: green;
             color: white;
             border-radius: 50%;
@@ -646,6 +654,7 @@
     </div>
 
     <script>
+        let postIndex = localStorage.getItem('postIndex') ? parseInt(localStorage.getItem('postIndex')) : 0;
         let imageUrl = '';
 
         function openModal(event) {
@@ -686,7 +695,16 @@
 
                 if (response.ok) {
                     const post = await response.json();
-                    createPostElement(post);
+                    createPostElement({
+                        id: post.id,
+                        imageUrl: post.imageUrl,
+                        title: post.title,
+                        description: post.description,
+                        price: post.price,
+                        contact: post.contact,
+                        likes: post.likes,
+                        views: post.views
+                    });
                     resetModal();
                 } else {
                     alert('Failed to upload post. Please try again.');
@@ -713,9 +731,8 @@
             postContainer.classList.add('post-container');
 
             const img = document.createElement('img');
-            img.src = post.imageUrl;
+            img.src = post.imageUrl; // Use the uploaded image URL from the server
             img.alt = 'Product Image';
-            img.onclick = () => incrementView(post.id);
 
             const postDetails = document.createElement('div');
             postDetails.classList.add('post-details');
@@ -723,50 +740,55 @@
                 <h4>${post.title}</h4>
                 <p>Description: ${post.description}</p>
                 <p>Price: UGX ${post.price}</p>
-               <p>Contact: <a href="tel:${post.contact}">${post.contact}</a></p>
+                <p>Contact: <a href="tel:${post.contact}">${post.contact}</a></p>
+                <p>Likes: <span id="likeCount-${post.id}">${post.likes}</span></p>
+                <p>Views: <span id="viewCount-${post.id}">${post.views}</span></p>
             `;
 
             const postActions = document.createElement('div');
             postActions.classList.add('post-actions');
-            postActions.innerHTML = `
-                <button onclick="incrementLike(${post.id})">❤️ ${post.likes}</button>
-                <button onclick="incrementView(${post.id})">👁️ ${post.views}</button>
-            `;
+
+            const likeButton = document.createElement('button');
+            likeButton.classList.add('like-btn');
+            likeButton.textContent = 'Like';
+            likeButton.onclick = () => handleLike(post.id);
+
+            const viewButton = document.createElement('button');
+            viewButton.classList.add('view-btn');
+            viewButton.textContent = 'View';
+            viewButton.onclick = () => handleView(post.id);
+
+            postActions.appendChild(likeButton);
+            postActions.appendChild(viewButton);
 
             postContainer.appendChild(img);
             postContainer.appendChild(postDetails);
             postContainer.appendChild(postActions);
 
-            document.getElementById('postSection').appendChild(postContainer);
+            document.getElementById('postSection').insertBefore(postContainer, postSection.firstChild);
         }
 
-        async function incrementLike(postId) {
+        async function handleLike(postId) {
             try {
-                const response = await fetch(`http://localhost:3000/like/${postId}`, { method: 'POST' });
-                if (response.ok) {
-                    const { likes } = await response.json();
-                    alert(`Post liked! Total Likes: ${likes}`);
-                } else {
-                    alert('Failed to like post.');
-                }
+                const response = await fetch(`http://localhost:3000/like/${postId}`, {
+                    method: 'POST',
+                });
+                const data = await response.json();
+                document.getElementById(`likeCount-${postId}`).textContent = data.likes;
             } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while liking the post.');
+                console.error('Error liking post:', error);
             }
         }
 
-        async function incrementView(postId) {
+        async function handleView(postId) {
             try {
-                const response = await fetch(`http://localhost:3000/view/${postId}`, { method: 'POST' });
-                if (response.ok) {
-                    const { views } = await response.json();
-                    alert(`Post viewed! Total Views: ${views}`);
-                } else {
-                    alert('Failed to view post.');
-                }
+                const response = await fetch(`http://localhost:3000/view/${postId}`, {
+                    method: 'POST',
+                });
+                const data = await response.json();
+                document.getElementById(`viewCount-${postId}`).textContent = data.views;
             } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while viewing the post.');
+                console.error('Error viewing post:', error);
             }
         }
 
@@ -778,11 +800,15 @@
             imageUrl = '';
             document.getElementById('postModal').style.display = 'none';
         }
+
+        window.onload = function() {
+            // Optional: load existing posts
+        };
     </script>
 </body>
-</html>
+</html>      
 
-
+    
   
 
             
