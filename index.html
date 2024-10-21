@@ -542,12 +542,7 @@
     setInterval(showSlides, 900);</script>
 </script>
 
-        
-<br>
-
-
-  
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -563,13 +558,13 @@
             background-color: rgba(34, 34, 34, 0.9);
             border-radius: 25px;
             padding: 20px;
-            margin-bottom: 20px;
-            color: white;
+            margin-bottom: 2px;
         }
         .post-container img {
             width: 100%;
             height: auto;
             border-radius: 25px;
+            cursor: pointer;
         }
         .post-details {
             text-align: left;
@@ -648,6 +643,7 @@
     </div>
 
     <script>
+        let postIndex = localStorage.getItem('postIndex') ? parseInt(localStorage.getItem('postIndex')) : 0;
         let imageUrl = '';
 
         function openModal(event) {
@@ -687,16 +683,15 @@
                 });
 
                 if (response.ok) {
-                    const post = await response.json();
+                    const post = await response.json(); // Adjust based on your server's response
                     createPostElement(post);
                     resetModal();
                 } else {
-                    const errorText = await response.text();
-                    alert('Failed to upload post: ' + errorText);
+                    alert('Failed to upload post. Please try again.');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('An error occurred while uploading the post: ' + error.message);
+                alert('An error occurred while uploading the post.');
             }
         }
 
@@ -726,70 +721,78 @@
                 <p>Description: ${post.description}</p>
                 <p>Price: UGX ${post.price}</p>
                 <p>Contact: <a href="tel:${post.contact}">${post.contact}</a></p>
-                <div class="post-actions">
-                    <button onclick="likePost(${post.id})">Like</button>
-                    <span id="likes-${post.id}">Likes: ${post.likes}</span>
-                    <button onclick="viewPost(${post.id})">View</button>
-                    <span id="views-${post.id}">Views: ${post.views}</span>
-                </div>
+            `;
+
+            const postActions = document.createElement('divconst postActions = document.createElement('div');
+            postActions.classList.add('post-actions');
+            postActions.innerHTML = `
+                <button onclick="likePost(${post.id})">Like</button>
+                <button onclick="viewPost(${post.id})">View</button>
+                <p id="likes-${post.id}">Likes: ${post.likes}</p>
+                <p id="views-${post.id}">Views: ${post.views}</p>
             `;
 
             postContainer.appendChild(img);
             postContainer.appendChild(postDetails);
+            postContainer.appendChild(postActions);
+
             document.getElementById('postSection').appendChild(postContainer);
         }
 
         async function likePost(postId) {
             try {
-                const response = await fetch(`http://localhost:3000/like/${postId}`, { method: 'POST' });
+                const response = await fetch(`http://localhost:3000/like/${postId}`, {
+                    method: 'POST',
+                });
+
                 if (response.ok) {
-                    const data = await response.json();
-                    document.getElementById(`likes-${postId}`).innerText = `Likes: ${data.likes}`;
+                    const result = await response.json();
+                    document.getElementById(`likes-${postId}`).innerText = `Likes: ${result.likes}`;
                 } else {
                     alert('Failed to like the post.');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('An error occurred while liking the post: ' + error.message);
+                alert('An error occurred while liking the post.');
             }
         }
 
         async function viewPost(postId) {
             try {
-                const response = await fetch(`http://localhost:3000/view/${postId}`, { method: 'POST' });
+                const response = await fetch(`http://localhost:3000/view/${postId}`, {
+                    method: 'POST',
+                });
+
                 if (response.ok) {
-                    const data = await response.json();
-                    document.getElementById(`views-${postId}`).innerText = `Views: ${data.views}`;
+                    const result = await response.json();
+                    document.getElementById(`views-${postId}`).innerText = `Views: ${result.views}`;
                 } else {
                     alert('Failed to view the post.');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('An error occurred while viewing the post: ' + error.message);
+                alert('An error occurred while viewing the post.');
             }
         }
 
         function resetModal() {
+            document.getElementById('postModal').style.display = 'none';
             document.getElementById('postTitle').value = '';
             document.getElementById('postDescription').value = '';
             document.getElementById('postPrice').value = '';
             document.getElementById('postContact').value = '';
-            imageUrl = '';
-            document.getElementById('postModal').style.display = 'none';
-            document.getElementById('fileInput').value = '';
         }
+
     </script>
 </body>
 </html>
 
 
 
+  
 
-
-
-
-   
-
+            
+                
 
 
    
