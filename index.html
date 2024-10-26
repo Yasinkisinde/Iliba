@@ -543,7 +543,9 @@
 </script>
 
 
-   <!DOCTYPE html>
+   
+            
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -686,23 +688,14 @@
             formData.append('contact', contact);
 
             try {
-                const response = await fetch('http://localhost:3000/upload', {
+                const response = await fetch('/upload', {
                     method: 'POST',
                     body: formData,
                 });
 
                 if (response.ok) {
                     const post = await response.json();
-                    createPostElement({
-                        id: post.id,
-                        imageUrl: post.imageUrl,
-                        title: post.title,
-                        description: post.description,
-                        price: post.price,
-                        contact: post.contact,
-                        likes: post.likes,
-                        views: post.views
-                    });
+                    createPostElement(post);
                     resetModal();
                 } else {
                     alert('Failed to upload post. Please try again.');
@@ -768,7 +761,7 @@
 
         async function handleLike(postId) {
             try {
-                const response = await fetch(`http://localhost:3000/like/${postId}`, {
+                const response = await fetch(`/like/${postId}`, {
                     method: 'POST',
                 });
                 const data = await response.json();
@@ -780,7 +773,7 @@
 
         async function handleView(postId) {
             try {
-                const response = await fetch(`http://localhost:3000/view/${postId}`, {
+                const response = await fetch(`/view/${postId}`, {
                     method: 'POST',
                 });
                 const data = await response.json();
@@ -799,12 +792,19 @@
             document.getElementById('postModal').style.display = 'none';
         }
 
-        window.onload = function() {
-            // Optional: load existing posts
+        window.onload = async function() {
+            try {
+                const response = await fetch('/posts');
+                const posts = await response.json();
+                posts.forEach(createPostElement);
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            }
         };
     </script>
 </body>
 </html>
+    
 
 
     
